@@ -33,8 +33,10 @@ void setup() {
 }
 
 void loop() {
-  userTimeInput = Serial.read();
-  if(userTimeInput == 's'){
-    takeData();
-  }
+    if(Serial.avaliable() > 0){
+        userTimeInput = Serial.read();
+        if(userTimeInput == 's'){
+            takeData();
+        }
+    }
 }
