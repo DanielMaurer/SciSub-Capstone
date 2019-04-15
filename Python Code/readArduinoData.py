@@ -1,7 +1,11 @@
 import serial
 
-arduinoData = serial.Serial('/dev/ttyACM0', 9600)
+ser = serial.Serial('/dev/ttyACM0', 9600)
 
 while 1:
-    myData = arduinoData.readline()
-    print(myData)
+    userInput = input("Enter 's' to take data: ")
+
+    if userInput == 's':
+        ser.write(b's')
+        arduinoData = ser.readline()
+        print(arduinoData)
