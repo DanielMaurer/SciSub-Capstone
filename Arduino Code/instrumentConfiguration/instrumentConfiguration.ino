@@ -1,26 +1,31 @@
+// Declare data values and analog input pins
 int dtime = 0;
-
 float temperature = 0.00;
 const int temperatureSensor = A0;
-
-int pressure = 0;
-int turbidity = 0;
+float pressure = 0.00;
+const int pressureSensor = A1;
+float turbidity = 0.00;
+const int turbiditySensor = A2;
 
 char userTimeInput;
 
 void takeData(){
   Serial.println("Time (s)\tTemperature (°C)\tPressure\tTurbidity\n");
-  while(dtime < 20){
+  while(true){
     dtime+=1;
     Serial.print(dtime);
     Serial.print('\t');
-    temperature = (0.4868 * analogRead(temperatureSensor)) - 49.772;  
+
+    //TODO: Find the temperature converstion
+    //temperature = (0.4868 * analogRead(temperatureSensor)) - 49.772;  
+    temperature = analogRead(temperatureSensor);
     Serial.print(temperature);
     Serial.print('\t');
-    pressure+=1;
+    
+    pressure = analogRead(pressureSensor);
     Serial.print(pressure);
     Serial.print('\t');
-    turbidity+=1;
+    turbidity = analogRead(turbiditySensor) * (5.0/1024.0);
     Serial.print(turbidity);
     Serial.print('\n');
     delay(1000);
