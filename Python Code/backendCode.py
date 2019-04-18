@@ -20,26 +20,28 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 # ========================== Defining Variables ===========================
-ser = serial.Serial('/dev/ttyACM0', 9600)
-collectionTime = None
+ser = serial.Serial('/dev/ttyACM1', 9600) # MAY HAVE TO CHANGE THIS VARIABLE EACH TIME
+collectionTime = 0
 
 # ========================== Defining functions ===========================
 ''' This set of functions will react to the user choice'''
 
 def setCollectionTime():
     print("This function will edit the time that data will be collected for") # TODO: Need to interact with the arduino code to set a data collection time (This will be done in the while loop)
+    global collectionTime
     collectionTime = int(input("Enter the time that data will be collected: "))
     
 
 def startDataCollection():
     print("This function will start the data collection")
+    print("The collection time is {} seconds.".format(collectionTime))
     if collectionTime == 0:
         print("Specify data collection time then try again...")
     else:
-        while 1:
+        while 1: # TODO: Will need to write a function that will stop the loop after one time iteration
             ser.write(b's') # This value will need to be changed with respect to the arduino code
-            arduinoData = ser.readLine()
-            print(arduinoData)
+            arduinoData = ser.readline().strip()
+            print(arduinoData.decode('utf-8'))
         
 
 def graphData():
@@ -47,9 +49,6 @@ def graphData():
 
 def editGraph():
     print("This function will edit the contents of the graph")
-
-''' This set of functions will interact with the Arduino via the serial library'''
-
 
 
 

@@ -11,7 +11,7 @@ char userTimeInput;
 
 void takeData(){
   Serial.println("Time (s)\tTemperature (°C)\tPressure\tTurbidity\n");
-  while(true){
+  while(dtime < 20){
     dtime+=1;
     Serial.print(dtime);
     Serial.print('\t');
@@ -29,6 +29,7 @@ void takeData(){
     Serial.print(turbidity);
     Serial.print('\n');
     delay(1000);
+    Serial.flush();
   }
 }
 
@@ -42,6 +43,8 @@ void loop() {
         userTimeInput = Serial.read();
         if(userTimeInput == 's'){
             takeData();
+            dtime = 0;
         }
+        userTimeInput = 'done';
     }
 }

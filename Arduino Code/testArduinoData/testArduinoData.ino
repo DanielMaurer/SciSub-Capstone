@@ -1,8 +1,5 @@
 int dtime = 0;
-
-float temperature = 0.00;
-const int temperatureSensor = A0;
-
+float temperature = 0;
 int pressure = 0;
 int turbidity = 0;
 
@@ -14,7 +11,7 @@ void takeData(){
     dtime+=1;
     Serial.print(dtime);
     Serial.print('\t');
-    temperature = (0.4868 * analogRead(temperatureSensor)) - 49.772;  
+    temperature +=1;
     Serial.print(temperature);
     Serial.print('\t');
     pressure+=1;
