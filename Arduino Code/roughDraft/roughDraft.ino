@@ -10,8 +10,9 @@ const int turbiditySensor = A2;
 char userTimeInput;
 
 void takeData(){
-  Serial.println("Time (s)\tTemperature (°C)\tPressure\tTurbidity\n");
-  while(dtime < 20){
+  //Serial.begin(9600);
+  //Serial.println("Time (s)\tTemperature (°C)\tPressure\tTurbidity\n");
+  while(dtime < 5){
     dtime+=1;
     Serial.print(dtime);
     Serial.print('\t');
@@ -44,7 +45,9 @@ void loop() {
         if(userTimeInput == 's'){
             takeData();
             dtime = 0;
+        }else if(userTimeInput == 'd'){
+          Serial.end();
         }
-        userTimeInput = 'done';
+        
     }
 }

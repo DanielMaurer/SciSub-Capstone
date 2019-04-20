@@ -20,10 +20,42 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 # ========================== Defining Variables ===========================
-ser = serial.Serial('/dev/ttyACM1', 9600) # MAY HAVE TO CHANGE THIS VARIABLE EACH TIME
+ser = serial.Serial('/dev/ttyACM0', 9600) # MAY HAVE TO CHANGE THIS VARIABLE EACH TIME
 collectionTime = 0
+titles = ['Time (s)', 'Temperature (°C)', 'Pressure', 'Turbidity'] # Adjust accordingly
+time = []
+temperature = []
+pressure = []
+turbidity = []
 
 # ========================== Defining functions ===========================
+''' This set of functions will allow the user to graph data '''
+
+def timeTemperature():
+    global titles, time, temperature
+    # if time or temperature is empty, send back to main menu
+    print("This function will graph Time v. Temperature")
+
+def timePressure():
+    global titles, time, pressure
+    # if time or pressure is empty, send back to main menu
+    print("This function will graph Time v. Pressure")
+
+def timeTurbidity():
+    global titles, time, turbidity
+    # if time or turbidity is empty, send back to main menu
+    print("This function will graph Time v. Turbidity")
+
+def intList():
+    '''Convert all values in the time, temperature, pressure and turbidity
+       lists into integers.'''
+    global time, temperature, pressure, turbidity
+    time = list(map(int, time))
+    temperature = list(map(float, temperature))
+    pressure = list(map(float, pressure))
+    turbidity = list(map(float, turbidity))
+
+
 ''' This set of functions will react to the user choice'''
 
 def setCollectionTime():
@@ -38,14 +70,43 @@ def startDataCollection():
     if collectionTime == 0:
         print("Specify data collection time then try again...")
     else:
-        while 1: # TODO: Will need to write a function that will stop the loop after one time iteration
-            ser.write(b's') # This value will need to be changed with respect to the arduino code
+        for i in range(collectionTime): # TODO: Will need to write a function that will stop the loop after one time iteration
+            ser.write(b's')
             arduinoData = ser.readline().strip()
-            print(arduinoData.decode('utf-8'))
-        
+            #print(arduinoData)
+            readable = arduinoData.decode('utf-8').split('\t')
+            print(readable)
+            time.append(readable[0])
+            temperature.append(readable[1])
+            pressure.append(readable[2])
+            turbidity.append(readable[3])
+            
+        intList() # Convert all the list attributes to integers
+
+            # TODO: Add a progress bar for the data collection
+    ser.write(b'd') # Serial.end() command on the arduino       
 
 def graphData():
     print("This function will graph the data")
+    graphs = {
+        "1": timeTemperature,
+        "2": timePressure,
+        "3": timeTurbidity,
+}
+    print("""
+    Select what you would like to graph:
+
+    1. Time v. Temperature
+    2. Time v. Pressure
+    3. Time v. Turbidity
+    """
+          )
+    option = input("Enter an option: ")
+    action = graphs.get(option)
+    if action:
+        action()
+    else:
+        print("{0} is not a valid choice".format(choice))
 
 def editGraph():
     print("This function will edit the contents of the graph")
