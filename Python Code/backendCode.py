@@ -35,16 +35,34 @@ def timeTemperature():
     global titles, time, temperature
     # if time or temperature is empty, send back to main menu
     print("This function will graph Time v. Temperature")
+    plt.plot(time, temperature)
+    plt.title("Temperature Change")
+    plt.xlabel(titles[0])
+    plt.ylabel(titles[1])
+    plt.grid(True)
+    plt.show()
 
 def timePressure():
     global titles, time, pressure
     # if time or pressure is empty, send back to main menu
     print("This function will graph Time v. Pressure")
+    plt.plot(time, pressure)
+    plt.title("Pressure Change")
+    plt.xlabel(titles[0])
+    plt.ylabel(titles[2])
+    plt.grid(True)
+    plt.show()
 
 def timeTurbidity():
     global titles, time, turbidity
     # if time or turbidity is empty, send back to main menu
     print("This function will graph Time v. Turbidity")
+    plt.plot(time, turbidity)
+    plt.title("Turbidity Change")
+    plt.xlabel(titles[0])
+    plt.ylabel(titles[3])
+    plt.grid(True)
+    plt.show()
 
 def intList():
     '''Convert all values in the time, temperature, pressure and turbidity
@@ -61,15 +79,20 @@ def intList():
 def setCollectionTime():
     print("This function will edit the time that data will be collected for") # TODO: Need to interact with the arduino code to set a data collection time (This will be done in the while loop)
     global collectionTime
-    collectionTime = int(input("Enter the time that data will be collected: "))
-    
+    if collectionTime is not -1:
+        collectionTime = int(input("Enter the time that data will be collected: "))
+    else:
+        print("No more data will be collected for this trial...")
 
 def startDataCollection():
+    global collectionTime
     print("This function will start the data collection")
-    print("The collection time is {} seconds.".format(collectionTime))
     if collectionTime == 0:
         print("Specify data collection time then try again...")
+    elif collectionTime == -1:
+        print("No more data will be collected for this trial...")
     else:
+        print("The collection time is {} seconds.".format(collectionTime))
         for i in range(collectionTime): # TODO: Will need to write a function that will stop the loop after one time iteration
             ser.write(b's')
             arduinoData = ser.readline().strip()
@@ -82,31 +105,38 @@ def startDataCollection():
             turbidity.append(readable[3])
             
         intList() # Convert all the list attributes to integers
+        ser.write(b'd') # Serial.end() command on the arduino
+        collectionTime = -1
 
             # TODO: Add a progress bar for the data collection
-    ser.write(b'd') # Serial.end() command on the arduino       
+           
 
 def graphData():
     print("This function will graph the data")
-    graphs = {
-        "1": timeTemperature,
-        "2": timePressure,
-        "3": timeTurbidity,
-}
-    print("""
-    Select what you would like to graph:
+    global time
+    if time:
+        graphs = {
+            "1": timeTemperature,
+            "2": timePressure,
+            "3": timeTurbidity,
+    }
+        print("""
+        Select what you would like to graph:
 
-    1. Time v. Temperature
-    2. Time v. Pressure
-    3. Time v. Turbidity
-    """
-          )
-    option = input("Enter an option: ")
-    action = graphs.get(option)
-    if action:
-        action()
+        1. Time v. Temperature
+        2. Time v. Pressure
+        3. Time v. Turbidity
+        """
+              )
+        option = input("Enter an option: ")
+        action = graphs.get(option)
+        if action:
+            action()
+        else:
+            print("{0} is not a valid choice".format(choice))
+
     else:
-        print("{0} is not a valid choice".format(choice))
+        print("Collect data then try again...")
 
 def editGraph():
     print("This function will edit the contents of the graph")
