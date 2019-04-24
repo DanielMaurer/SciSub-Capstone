@@ -1,9 +1,9 @@
 // Declare data values and analog input pins
 int dtime = 0;
 float temperature = 0.00;
-const int temperatureSensor = A0;
+const int temperatureSensor = A1;
 float pressure = 0.00;
-const int pressureSensor = A1;
+const int pressureSensor = A0;
 float turbidity = 0.00;
 const int turbiditySensor = A2;
 
@@ -12,7 +12,7 @@ String userInput;
 void takeData(){
   //Serial.begin(9600);
   //Serial.println("Time (s)\tTemperature (°C)\tPressure\tTurbidity\n");
-  while(dtime < 5){
+  while(dtime < 500){
     dtime+=1;
     Serial.print(dtime);
     Serial.print('\t');
