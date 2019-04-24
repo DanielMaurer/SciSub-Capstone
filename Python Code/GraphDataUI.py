@@ -72,6 +72,7 @@ class Plot(File):
         plt.ylabel("Temperature (C)")
         plt.xlabel("Time (s)")
         plt.axis([self.minTime, self.maxTime, self.minTemp, self.maxTemp])
+        
         plt.show()
 
     def plotPressure(self):
