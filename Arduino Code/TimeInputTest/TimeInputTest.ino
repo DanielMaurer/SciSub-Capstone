@@ -45,11 +45,16 @@ void loop() {
     userInput = Serial.readString();
     userInput.toLowerCase();
     if(userInput.startsWith("sta")){
-      collectionTime = userInput.substring(3).toInt(); // Converts everything after "sta" to an int
+      /*Serial.println("This string starts with s."); Use this to see what the user entered
+      Serial.println(userInput.substring(0,3));*/
+      collectionTime = userInput.substring(3).toInt();
+      //Serial.println(collectionTime);
       takeData();
       dtime = 0;
-    }else if(userInput.startsWith("end")){
-      Serial.end();
-    }
-  }     
+      
+    }else{
+      Serial.println("This string doesnt work.");
+      Serial.println(userInput.substring(0,3));
+    }   
+  }
 }//*/

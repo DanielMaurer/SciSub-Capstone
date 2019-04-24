@@ -79,33 +79,33 @@ def intList():
 def setCollectionTime():
     print("This function will edit the time that data will be collected for") # TODO: Need to interact with the arduino code to set a data collection time (This will be done in the while loop)
     global collectionTime
-    if collectionTime is not -1:
+    if collectionTime is not -1: # If this is the first time
         collectionTime = int(input("Enter the time that data will be collected: "))
-    else:
+    else: # If data was already collected
         print("No more data will be collected for this trial...")
 
 def startDataCollection():
     global collectionTime
     print("This function will start the data collection")
-    if collectionTime == 0:
+    if collectionTime == 0: # If no data collection time was specified
         print("Specify data collection time then try again...")
-    elif collectionTime == -1:
+    elif collectionTime == -1: # If data was already collected
         print("No more data will be collected for this trial...")
-    else:
+    else: # If this is the first time to collect data
         print("The collection time is {} seconds.".format(collectionTime))
-        for i in range(collectionTime): # TODO: Will need to write a function that will stop the loop after one time iteration
-            ser.write(b's')
-            arduinoData = ser.readline().strip()
-            #print(arduinoData)
-            readable = arduinoData.decode('utf-8').split('\t')
+        for i in range(collectionTime): # Take data for the given amount of time
+            ser.write(('sta'+str(collectionTime)).encode()) # write the start command with time to the serial monitor
+            arduinoData = ser.readline().strip() # Take the data line by line
+            readable = arduinoData.decode('utf-8').split('\t') # Convert it to readable data
             print(readable)
+            # Append values to their given list
             time.append(readable[0])
             temperature.append(readable[1])
             pressure.append(readable[2])
             turbidity.append(readable[3])
             
         intList() # Convert all the list attributes to integers
-        ser.write(b'd') # Serial.end() command on the arduino
+        ser.write('end'.encode()) # Serial.end() command on the arduino
         collectionTime = -1
 
             # TODO: Add a progress bar for the data collection
