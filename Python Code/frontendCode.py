@@ -41,20 +41,31 @@ class SciSubCap(tk.Tk): # tk will be inherited
         frame.tkraise()
 
 
-def qf(parameter):
-    print(parameter)
-
 class StartPage(tk.Frame):
+
+    def retrieve_input(self):
+        inputValue = time_entry.get("1.0", "end-1c")
+        print(inputValue)
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         
-        titleLabel = tk.Label(self, text="Sci-Sub", font=TITLE_FONT)
-        titleLabel.pack(pady=5, padx=10)
+        title_label = tk.Label(self, text="Sci-Sub", font=TITLE_FONT)
+        title_label.pack(pady=5, padx=10)
 
-        subtitleLabel = tk.Label(self, text="Leading innovation in submersable research", font=SUBTITLE_FONT)
-        subtitleLabel.pack(pady=2)
+        subtitle_label = tk.Label(self, text="Leading innovation in submersable research", font=SUBTITLE_FONT)
+        subtitle_label.pack(pady=2)
 
+        time_label = tk.Label(self, text="Enter the collection time:", font=LARGE_FONT)
+        time_label.pack(pady=2)
+
+        time_entry = tk.Text(self, height=1, width=10)
+        time_entry.pack()
+
+        button_enter = ttk.Button(self, text="Enter") #command=lambda: time_entry.get("1.0", "end-1c"))
+        button_enter.pack()
+
+        """
         button1 = ttk.Button(self, text="Visit Page 1", command=lambda: controller.show_frame(PageOne))
         button1.pack()
         
@@ -62,7 +73,8 @@ class StartPage(tk.Frame):
         button2.pack()
 
         button3 = ttk.Button(self, text="Graph Page", command=lambda: controller.show_frame(PageThree))
-        button3.pack()
+        button3.pack()"""
+
 
 class PageOne(tk.Frame):
 
@@ -78,6 +90,7 @@ class PageOne(tk.Frame):
         button2 = ttk.Button(self, text="Page Two", command=lambda: controller.show_frame(PageTwo))
         button2.pack()
 
+
 class PageTwo(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -91,6 +104,7 @@ class PageTwo(tk.Frame):
 
         button2 = ttk.Button(self, text="Page One",command=lambda: controller.show_frame(PageOne))
         button2.pack()
+
 
 class PageThree(tk.Frame): # This frame will display the graph
 
@@ -115,8 +129,8 @@ class PageThree(tk.Frame): # This frame will display the graph
         toolbar.update()
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
-        
-        
+
+
 
 app = SciSubCap()
 app.mainloop()
