@@ -53,34 +53,32 @@ class StartPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        self.collectionTime = 0
         
         title_label = tk.Label(self, text="Sci-Sub", font=TITLE_FONT)
-        title_label.grid(row=0, column=1)
+        title_label.pack()
 
         subtitle_label = tk.Label(self, text="Leading innovation in submersable research", font=SUBTITLE_FONT)
-        subtitle_label.grid(row=1, column=1)
+        subtitle_label.pack()
 
         space_label = tk.Label(self, text="              ", font=SUBTITLE_FONT)
-        space_label.grid(row=2, column=1)
-        space_label.grid(row=2, column=0)
-        space_label.grid(row=6, column=1)
-        space_label.grid(row=7,column=1)
+        space_label.pack()
 
         time_label = tk.Label(self, text="Enter the collection time:", font=LARGE_FONT)
-        time_label.grid(row=3, column=1)
+        time_label.pack()
 
         time_entry = tk.Text(self, height=1, width=10)
-        time_entry.grid(row=4, column=1)
+        time_entry.pack()
 
         button_time_enter = ttk.Button(self, text="Enter", command=lambda: self.retrieve_input(time_entry))
-        button_time_enter.grid(row=4, column=2)
+        button_time_enter.pack()
 
         button_start_data = ttk.Button(self, text="Start Collection", command=lambda: controller.start_data_collection())
-        button_start_data.grid(row=5, column=1)
+        button_start_data.pack()
+
+        space_label.pack()
 
         button_view_graph = ttk.Button(self, text="View Data", command=lambda: controller.show_frame(PageThree))
-        button_view_graph.grid(row=8, column=1)
+        button_view_graph.pack()
 
         '''
         button3 = ttk.Button(self, text="Graph Page", command=lambda: controller.show_frame(PageThree))
