@@ -40,40 +40,51 @@ class SciSubCap(tk.Tk): # tk will be inherited
         frame = self.frames[cont] # cont is the key for what frame is being raised
         frame.tkraise()
 
+    def start_data_collection(self):
+        print("This function will start the data collection")
+
+
 
 class StartPage(tk.Frame):
 
-    def retrieve_input(self):
-        inputValue = time_entry.get("1.0", "end-1c")
-        print(inputValue)
+    def retrieve_input(self, time_entry):
+        self.collectionTime = int(time_entry.get("1.0", "end-1c"))
+        print(self.collectionTime)
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.collectionTime = 0
         
         title_label = tk.Label(self, text="Sci-Sub", font=TITLE_FONT)
-        title_label.pack(pady=5, padx=10)
+        title_label.grid(row=0, column=1)
 
         subtitle_label = tk.Label(self, text="Leading innovation in submersable research", font=SUBTITLE_FONT)
-        subtitle_label.pack(pady=2)
+        subtitle_label.grid(row=1, column=1)
+
+        space_label = tk.Label(self, text="              ", font=SUBTITLE_FONT)
+        space_label.grid(row=2, column=1)
+        space_label.grid(row=2, column=0)
+        space_label.grid(row=6, column=1)
+        space_label.grid(row=7,column=1)
 
         time_label = tk.Label(self, text="Enter the collection time:", font=LARGE_FONT)
-        time_label.pack(pady=2)
+        time_label.grid(row=3, column=1)
 
         time_entry = tk.Text(self, height=1, width=10)
-        time_entry.pack()
+        time_entry.grid(row=4, column=1)
 
-        button_enter = ttk.Button(self, text="Enter") #command=lambda: time_entry.get("1.0", "end-1c"))
-        button_enter.pack()
+        button_time_enter = ttk.Button(self, text="Enter", command=lambda: self.retrieve_input(time_entry))
+        button_time_enter.grid(row=4, column=2)
 
-        """
-        button1 = ttk.Button(self, text="Visit Page 1", command=lambda: controller.show_frame(PageOne))
-        button1.pack()
-        
-        button2 = ttk.Button(self, text="Visit Page 2", command=lambda: controller.show_frame(PageTwo))
-        button2.pack()
+        button_start_data = ttk.Button(self, text="Start Collection", command=lambda: controller.start_data_collection())
+        button_start_data.grid(row=5, column=1)
 
+        button_view_graph = ttk.Button(self, text="View Data", command=lambda: controller.show_frame(PageThree))
+        button_view_graph.grid(row=8, column=1)
+
+        '''
         button3 = ttk.Button(self, text="Graph Page", command=lambda: controller.show_frame(PageThree))
-        button3.pack()"""
+        button3.pack()'''
 
 
 class PageOne(tk.Frame):
