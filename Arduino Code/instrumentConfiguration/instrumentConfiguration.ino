@@ -1,9 +1,9 @@
   // Declare data values and analog input pins
 int dtime = 0;
 float temperature = 0.00;
-const int temperatureSensor = A0;
+const int temperatureSensor = A1;
 float pressure = 0.00;
-const int pressureSensor = A1;
+const int pressureSensor = A0;
 float turbidity = 0.00;
 const int turbiditySensor = A2;
 
@@ -38,7 +38,7 @@ void setup() {
 }
 
 void loop() {
-    while(1){
+    if(Serial.available()>0){
         userTimeInput = Serial.read();
         if(userTimeInput == 's'){
             takeData();
