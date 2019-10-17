@@ -197,7 +197,7 @@ class PageGraph(tk.Frame): # This frame will display the graph
         button_temp = ttk.Button(self, text="Time v. Temperature", command=lambda: controller.graphData(status_label, self, 1))
         button_temp.pack()
 
-        button_pressure = ttk.Button(self, text="Time v. Pressure", command=lambda: controller.graphData(status_label, self, 2))
+        button_pressure = ttk.Button(self, text="Time v.z Pressure", command=lambda: controller.graphData(status_label, self, 2))
         button_pressure.pack()
 
         button_turbidity = ttk.Button(self, text="Time v. Turbidity", command=lambda: controller.graphData(status_label, self, 3))
